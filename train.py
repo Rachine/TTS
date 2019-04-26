@@ -87,7 +87,7 @@ def train(model, criterion, criterion_st, optimizer, optimizer_st, scheduler,
     if num_gpus > 0:
         batch_n_iter = int(len(data_loader.dataset) / (c.batch_size * num_gpus))
     else:
-        batch_n_iter = int(len(data_loader.dataset) / c.batch_size) 
+        batch_n_iter = int(len(data_loader.dataset) / c.batch_size)
     for num_iter, data in enumerate(data_loader):
         start_time = time.time()
 
@@ -257,7 +257,10 @@ def evaluate(model, criterion, criterion_st, ap, current_step, epoch):
         "It took me quite a long time to develop a voice, and now that I have it I'm not going to be silent.",
         "Be a voice, not an echo.",
         "I'm sorry Dave. I'm afraid I can't do that.",
-        "This cake is great. It's so delicious and moist."
+        "This cake is great. It's so delicious and moist.",
+        "clear it out",
+        "hand dance",
+        "rock"
     ]
     n_priority_freq = int(
         3000 / (c.audio['sample_rate'] * 0.5) * c.audio['num_freq'])
