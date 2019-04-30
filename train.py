@@ -256,9 +256,6 @@ def evaluate(model, criterion, criterion_st, ap, current_step, epoch):
     test_sentences = [
         "It took me quite a long time to develop a voice, and now that I have it I'm not going to be silent.",
         "Be a voice, not an echo.",
-        "I'm sorry Dave. I'm afraid I can't do that.",
-        "This cake is great. It's so delicious and moist.",
-        "clear it out",
         "hand dance",
         "rock"
     ]
@@ -391,14 +388,14 @@ def main(args):
         init_distributed(args.rank, num_gpus, args.group_id,
                          c.distributed["backend"], c.distributed["url"])
     num_chars = len(phonemes) if c.use_phonemes else len(symbols)
-    model = Tacotron(
+    model_t = Tacotron(
         num_chars=num_chars,
         embedding_dim=c.embedding_size,
         linear_dim=ap.num_freq,
         mel_dim=ap.num_mels,
         r=c.r,
         memory_size=c.memory_size)
-
+    model = model_t.to('cuda')
     optimizer = optim.Adam(model.parameters(), lr=c.lr, weight_decay=0)
     optimizer_st = optim.Adam(
         model.decoder.stopnet.parameters(), lr=c.lr, weight_decay=0)
